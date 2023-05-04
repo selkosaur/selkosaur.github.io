@@ -161,6 +161,8 @@ export class WeatherModule {
       climacons:
         "https://cdn.jsdelivr.net/gh/christiannaths/Climacons-Font/webfont/climacons-font.css",
       iconsax: "https://selkosaur.github.io/font/i/iconsax.css",
+      phosphoricons_light:
+        "https://unpkg.com/@phosphor-icons/web@2.0.3/src/light/style.css",
     };
     let stylesheets = document.querySelectorAll("link[rel='stylesheet']");
     const elHrefs = Array.from(stylesheets).map(({ href }) => href);
@@ -175,7 +177,7 @@ export class WeatherModule {
   }
   buildWeatherWidgets() {
     let data = this.__weatherdata;
-    this.addStyleSheets(["iconsax", "climacons"]);
+    this.addStyleSheets(["iconsax", "climacons", "phosphoricons_light"]);
     /**
      * common formats to use with `toLocaleDateString`
      */
@@ -382,6 +384,7 @@ export class WeatherModule {
     let sunsetArr = data.daily.sunset;
     let todaySunR = sunriseArr[0];
     let todaySunS = sunsetArr[0];
+    let isDay = currentWeather.is_day;
     let todaySRDateObj = dateStringtoObj(todaySunR);
     let todaySSDateObj = dateStringtoObj(todaySunS);
     let tmrSRDateObj = dateStringtoObj(sunriseArr[1]);
@@ -396,8 +399,33 @@ export class WeatherModule {
    ================================================= */
     const builderfns = {
       simple: function (targetdomstr) {
+        let code = c.codes[currentWeather.weathercode];
+        let codeicon =
+          isDay == "1"
+            ? c.icons.day[currentWeather.weathercode]
+            : c.icons.night[currentWeather.weathercode];
+        let precipmax = ddata.precipitation_probability_max[0];
         let newDiv = document.createElement("div");
-        newDiv.innerHTML = `weatherdata is here.. today's sunrise time is: ${todaySunR}`;
+        let daynighticon = isDay ? "sun-1" : "moon";
+        let daynightmsg = isDay ? "daytime" : "nighttime";
+        newDiv.innerHTML = `
+        <div>${currentWeather.temperature}
+        <span class="temperature-units">
+        ${hunits.temperature_2m}</span>
+        </div>
+        <div>
+        <div><i class="climacon ${codeicon} "></i></div>
+        <div>${code}</div>
+        </div>
+        <div data-tippy-title="today's chance of rain">
+        <span>
+        <i class="ph-light ph-umbrella"></i>
+        </span>
+        <span>${precipmax} %</span></div>
+        <div data-tippy-title="currently ${daynightmsg}">
+        <i class="isax isax-${daynighticon}"></i>
+        </div>
+        `;
         newDiv.classList.add("simple-weather-widget");
         document.querySelector(targetdomstr).appendChild(newDiv);
       },
@@ -407,7 +435,6 @@ export class WeatherModule {
       currentWeatherWidget: function (targetdomstr) {
         // populates widget with current weather information
         let newDiv = document.createElement("div");
-        let isDay = currentWeather.is_day;
 
         let code = c.codes[currentWeather.weathercode];
         let codeicon =
