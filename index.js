@@ -1,4 +1,5 @@
 import { default as ScrollTop, scroller } from "./js/scroll-top.js";
+import "./js/tags.js";
 
 let scr = scroller();
 
@@ -20,3 +21,10 @@ const demo = {
 };
 
 demo.makeBoxes();
+const tagCont = document.querySelector(".custom-tags");
+const newTagBtn = document.querySelector(".add-tag");
+const addTagEl = () => {
+  let t = document.createElement("my-tag");
+  tagCont.appendChild(t);
+};
+newTagBtn.addEventListener("click", addTagEl);

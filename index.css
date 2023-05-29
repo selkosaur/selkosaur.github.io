@@ -3,6 +3,12 @@ body {
     background-color: rgb(183, 209, 200);
 }
 
+:focus-visible {
+    outline-width: 1px;
+    outline-color: rgba(255, 255, 255, 0.3);
+    outline-style: solid;
+}
+
 code {
     font-family: 'Fira Code', 'Cascadia Code', 'Inconsolata', monospace;
 }
