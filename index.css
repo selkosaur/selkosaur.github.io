@@ -3,6 +3,22 @@ body {
     background-color: rgb(183, 209, 200);
 }
 
+button.add-tag {
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow      : unset;
+    border          : unset;
+    transition      : background-color 0.2s, transform 0.15s;
+
+}
+
+button.add-tag:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+button.add-tag:active {
+    transform: scale(0.9);
+}
+
 :focus-visible {
     outline-width: 1px;
     outline-color: rgba(255, 255, 255, 0.3);
