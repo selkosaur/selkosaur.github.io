@@ -21,10 +21,29 @@ const demo = {
 };
 
 demo.makeBoxes();
-const tagCont = document.querySelector(".custom-tags");
-const newTagBtn = document.querySelector(".add-tag");
-const addTagEl = () => {
+
+const addTagEl = function () {
   let t = document.createElement("my-tag");
-  tagCont.appendChild(t);
+  let cont = this.closest(".custom-tags");
+  if (!cont) {
+    console.error("no tag container element found");
+    return;
+  }
+  cont.appendChild(t);
 };
-newTagBtn.addEventListener("click", addTagEl);
+const tagConts = document.querySelectorAll(".custom-tags");
+tagConts.forEach((cont) => {
+  let newTagBtn = cont.querySelector(".add-tag");
+  if (!newTagBtn) {
+    newTagBtn = document.createElement("button");
+    newTagBtn.classList.add("add-tag");
+    newTagBtn.innerHTML = `+`;
+    if (cont.firstElementChild) {
+      let child = cont.firstElementChild;
+      child.insertAdjacentElement("beforeend", newTagBtn);
+    } else {
+      cont.insertAdjacentElement("beforeend", newTagBtn);
+    }
+  }
+  newTagBtn.addEventListener("click", addTagEl);
+});

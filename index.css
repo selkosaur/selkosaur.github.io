@@ -1,6 +1,6 @@
 /* for my demo page! */
 body {
-    background-color: rgb(183, 209, 200);
+    background-color: rgb(215, 223, 220);
 }
 
 button.add-tag {
@@ -8,6 +8,8 @@ button.add-tag {
     box-shadow      : unset;
     border          : unset;
     transition      : background-color 0.2s, transform 0.15s;
+    color           : var(--note-secondary);
+
 
 }
 
@@ -48,17 +50,58 @@ code {
 .square {
     height          : 50px;
     width           : 50px;
-    background-color: rgb(125, 125, 172);
+    background-color: rgb(149, 149, 174);
     margin          : 20px;
     border-radius   : 10px;
 }
 
+.square:nth-of-type(even) {
+    background-color: rgb(136, 153, 153);
+}
+
+main>div {
+    padding      : 5px;
+    border-radius: 10px;
+    margin       : 5px;
+}
+
 .info-block {
     background-color: rgba(255, 255, 255, 0.9);
-    padding         : 5px 0px;
-    border-radius   : 10px;
+
+
 }
 
 .info-block h2 {
-    text-align: center;
+    text-align   : center;
+    border-bottom: 1.5px solid gainsboro;
+    margin       : 2px 5px;
+}
+
+.info-block ul {
+    margin-left         : 0px;
+    padding-inline-start: 20px;
+    list-style-type     : square;
+}
+
+.info-block ul li::marker {
+    color    : rgb(147, 157, 162);
+    font-size: 130%;
+
+}
+
+
+.custom-tags {
+    --note-primary  : orange;
+    --note-secondary: rgb(242, 227, 202);
+    background-color: var(--note-primary);
+    color           : var(--note-secondary);
+
+}
+
+.custom-tags:nth-child(even),
+.tags-area-cont {
+    background-color: var(--note-primary);
+    color           : var(--note-secondary);
+    --note-primary  : rgb(67, 69, 86);
+    --note-secondary: rgb(174, 196, 228);
 }
