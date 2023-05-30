@@ -49,6 +49,70 @@ let docFocusOutHandle = function (event) {
 document.addEventListener("focusout", docFocusOutHandle);
 document.addEventListener("keydown", docKeyHandle);
 
+const tagsCss = `   
+    tags-area{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      min-height:1em;
+
+    }
+    my-tag{
+        display:inline-flex;
+         align-items:center;
+        margin: 4px 2px;
+        padding: 5px 10px;
+        border-radius: 30px;
+        background-color: var(--note-secondary, #f7f7f7);
+        color: var(--note-primary, #000000);
+
+    }
+    my-tag .text-field, tag-text{
+        border-radius: 5px;
+        padding:2px;
+        margin: 0px 5px;
+        display: inline-block;
+        width:auto;
+        transition: width 2s, min-width 0.2s;
+        min-width:20px;
+        line-height:normal;
+        min-height: 10px;
+
+    }
+    my-tag .text-field:empty, tag-text:empty{
+        min-width: 30px;
+    }
+
+    my-tag .tag-icon{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    tag-spacer{
+        margin: 4px 0px;
+        padding: 5px 3px;
+        height:inherit;
+        min-height:inherit;
+        min-width:2px;
+        border-radius: 5px;
+    }
+    tag-spacer:only-child:empty::before{
+        content:"add a tag";
+    }
+    button.tag-btn:defined{
+        all:unset;
+        cursor:pointer;
+        opacity:0.5;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }  
+    button.tag-btn:defined:hover,button.tag-btn:defined:focus{
+    opacity:1;
+    }
+      `;
+
 class TagSpacer extends HTMLElement {
   constructor() {
     super();
@@ -325,69 +389,8 @@ class Tag extends HTMLElement {
     }
     const head = document.querySelector("head");
     const style = document.createElement("style");
-    style.innerHTML = `   
-    tags-area{
-      display:flex;
-      align-items:center;
-      flex-wrap:wrap;
-      min-height:1em;
-
-    }
-    my-tag{
-        display:inline-flex;
-         align-items:center;
-        margin: 4px 2px;
-        padding: 5px 10px;
-        border-radius: 30px;
-        background-color: var(--note-secondary, #f7f7f7);
-        color: var(--note-primary, #000000);
-
-    }
-    my-tag .text-field, tag-text{
-        border-radius: 5px;
-        padding:2px;
-        margin: 0px 5px;
-        display: inline-block;
-        width:auto;
-        transition: width 2s, min-width 0.2s;
-        min-width:20px;
-        line-height:normal;
-        min-height: 10px;
-
-    }
-    my-tag .text-field:empty, tag-text:empty{
-        min-width: 30px;
-    }
-
-    my-tag .tag-icon{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-    }
-
-    tag-spacer{
-        margin: 4px 0px;
-        padding: 5px 3px;
-        height:inherit;
-        min-height:inherit;
-        min-width:2px;
-        border-radius: 5px;
-    }
-    tag-spacer:only-child:empty::before{
-        content:"add a tag";
-    }
-    button.tag-btn:defined{
-        all:unset;
-        cursor:pointer;
-        opacity:0.5;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-    }  
-    button.tag-btn:defined:hover,button.tag-btn:defined:focus{
-    opacity:1;
-    }
-      `;
+    style.setAttribute("data-csstype", "tags");
+    style.innerHTML = tagsCss;
     head.insertAdjacentElement("beforeend", style);
     Tag.styleTagAdded = true;
   }
@@ -395,9 +398,27 @@ class Tag extends HTMLElement {
 customElements.define("my-tag", Tag);
 
 class TagsArea extends HTMLElement {
+  static styleTagAdded = false;
+  static addStyles() {
+    if (this.styleTagAdded) {
+      return;
+    }
+    let style = document.querySelector("[data-csstype='tags']");
+    if (style) {
+      this.styleTagAdded = true;
+      return;
+    }
+    style = document.createElement("style");
+    style.innerHTML = tagsCss;
+    const head = document.querySelector("head");
+    head.insertAdjacentElement("beforeend", style);
+    this.styleTagAdded = true;
+  }
   constructor() {
     super();
+    TagsArea.addStyles();
   }
+
   connectedCallback() {
     //
     //  this.addInputListener();
