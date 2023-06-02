@@ -17,7 +17,7 @@ function Span(cssclasses) {
  * @param {string} string the  raw "from" in the "Sender Name" <address@email.com> format
  *
  */
-let SplitEmailInfo = function (string) {
+export let SplitEmailInfo = function (string) {
   this.combined = string;
   let splitIndex = string.indexOf("<");
   this.name = string.slice(0, splitIndex).replace(/"/g, "").trim();
@@ -30,13 +30,13 @@ let SplitEmailInfo = function (string) {
  * @param {Date} startDate the earlier Date obj
  * @return {number} the difference in days
  */
-let DaysDiff = function (endDate, startDate) {
+export let DaysDiff = function (endDate, startDate) {
   const diffTime = endDate.getTime() - startDate.getTime();
   const diffDays = diffTime / (1000 * 60 * 60 * 24);
   return diffDays;
 };
 
-function returnLast(arr) {
+export function returnLast(arr) {
   return arr.at(-1);
 }
 
