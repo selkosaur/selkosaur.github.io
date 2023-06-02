@@ -98,6 +98,9 @@ class EmailEntry {
     this.starredEl.innerHTML = thread.hasStarred
       ? this.filledStarSVG
       : `<i class="isax isax-star"></i>`;
+    if (thread.hasStarred) {
+      this.wrapper.classList.add("starred");
+    }
 
     //this is the raw "from" in the "Sender Name" <address@email.com> format
     let combinedFrom = thread.messages[0].from;
