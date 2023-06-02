@@ -39,7 +39,6 @@ let DaysDiff = function (endDate, startDate) {
 function returnLast(arr) {
   return arr.at(-1);
 }
-//custom web component email-entry
 
 class EmailEntry {
   static emailbox = document.querySelector(".email-box");
