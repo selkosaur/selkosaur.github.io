@@ -62,4 +62,24 @@ export function dateTime(datestring) {
   dateobj.daydiff = daydiffinMS / (1000 * 60 * 60 * 24); //positive number means date is in the future
   return dateobj;
 }
-export { dateTime as default };
+/**
+ * get object with info whether a Datetime is during daylight hours or not
+ * @param {Date} datetime the `Date` object to evaluate
+ * @param {Date} sunrisedatetime the `Date` object for that day's sunrise
+ * @param {Date} sunsetdatetime the `Date` object for that day's sunset
+ */
+export function dayvsnight(datetime, sunrisedatetime, sunsetdatetime) {
+  //to compare, dates must be in object formats already
+  /**
+   * @type {Object}
+   *
+   */
+  const dvn = {};
+  dvn.daylight =
+    datetime < sunrisedatetime || datetime > sunsetdatetime ? false : true;
+  dvn.dayornight = dvn.daylight == true ? "day" : "night";
+  dvn.beforeRise = datetime < sunrisedatetime ? true : false;
+  dvn.afterSet = datetime > sunsetdatetime ? true : false;
+  return dvn;
+}
+export { dateTime as default, dayvsnight };
