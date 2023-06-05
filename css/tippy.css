@@ -1,0 +1,147 @@
+/* tippy themes */
+
+.tippy-box[data-theme~='cloud-bars'] {
+    background-color: transparent;
+}
+
+.tippy-box[data-theme~='blue'] {
+    background-color: #DCEAF8;
+    color           : #202020;
+}
+
+.tippy-box[data-theme~='blue'][data-placement^='top']>.tippy-arrow::before {
+    border-top-color: #DCEAF8;
+}
+
+.tippy-box[data-theme~='blue'][data-placement^='bottom']>.tippy-arrow::before {
+    border-bottom-color: #BCC7D3;
+}
+
+.tippy-box[data-theme~='blue'][data-placement^='left']>.tippy-arrow::before {
+    border-left-color: #BCC7D3;
+}
+
+.tippy-box[data-theme~='blue'][data-placement^='right']>.tippy-arrow::before {
+    border-right-color: #BCC7D3;
+}
+
+/* The border of the arrow will now match the border of the box */
+.tippy-box[data-theme~='blue'] {
+    background: #DCEAF8;
+    border    : 1px solid #BCC7D3;
+}
+
+/* The border */
+.tippy-box[data-theme~='blue']>.tippy-svg-arrow>svg:first-child {
+    fill: #BCC7D3;
+}
+
+/* The fill */
+.tippy-box[data-theme~='blue']>.tippy-svg-arrow>svg:last-child {
+    fill: #DCEAF8;
+}
+
+.tippy-box[data-theme~='lightver'] {
+    background-color: rgba(255, 255, 255, 0.2);
+    color           : black;
+    backdrop-filter : blur(9px);
+    box-shadow      : 3px 3px gainsboro;
+    font-size       : 0.8rem;
+}
+
+.tippy-box[data-theme~='lightver'][data-placement^='top']>.tippy-arrow::before {
+    border-top-color: rgba(255, 255, 255, 0.9);
+
+    backdrop-filter: blur(9px);
+    outline        : 3px gainsboro;
+}
+
+.tippy-box[data-theme~='lightver'][data-placement^='bottom']>.tippy-arrow::before {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter    : blur(9px);
+}
+
+.tippy-box[data-theme~='lightver'][data-placement^='left']>.tippy-arrow::before {
+    border-left-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter  : blur(9px);
+}
+
+.tippy-box[data-theme~='lightver'][data-placement^='right']>.tippy-arrow::before {
+    border-right-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter   : blur(9px);
+}
+
+.tippy-box[data-theme~=light] {
+    color           : #26323d;
+    box-shadow      : 0 0 20px 4px rgba(154, 161, 177, .15), 0 4px 80px -8px rgba(36, 40, 47, .25), 0 4px 4px -2px rgba(91, 94, 105, .15);
+    background-color: #fff
+}
+
+.tippy-box[data-theme~=light][data-placement^=top]>.tippy-arrow:before {
+    border-top-color: #fff
+}
+
+.tippy-box[data-theme~=light][data-placement^=bottom]>.tippy-arrow:before {
+    border-bottom-color: #fff
+}
+
+.tippy-box[data-theme~=light][data-placement^=left]>.tippy-arrow:before {
+    border-left-color: #fff
+}
+
+.tippy-box[data-theme~=light][data-placement^=right]>.tippy-arrow:before {
+    border-right-color: #fff
+}
+
+.tippy-box[data-theme~=light]>.tippy-backdrop {
+    background-color: #fff
+}
+
+.tippy-box[data-theme~=light]>.tippy-svg-arrow {
+    fill: #fff
+}
+
+.tippy-box[data-theme~='mini'] {
+    font-size       : 12px;
+    text-align      : center;
+    font-weight     : 500;
+    padding         : 2px;
+    color           : rgba(252, 252, 252);
+    background-color: rgba(64, 64, 64);
+    text-transform  : lowercase;
+    margin          : 18px;
+    border-radius   : 0.8em;
+
+}
+
+.tippy-box[data-theme~='thin'] {
+    font-family: 'Karla', sans-serif;
+    font-size  : .9em;
+    color      :
+        /* var(--ColorTitle), */
+        inherit;
+    text-transform   : lowercase;
+    text-align       : center;
+    /* letter-spacing:.1em; */
+    background       : rgba(255, 255, 255, 0.6);
+    border-radius    : 10px;
+    /* margin-bottom :.5em; */
+}
+
+.tippy-box[data-theme~='custom'] {
+    font-family: 'Karla', sans-serif;
+    font-size  : .9em;
+    color      : var(--text, inherit);
+
+    text-transform   : lowercase;
+    text-align       : center;
+    /* letter-spacing:.1em; */
+    background       : rgba(255, 255, 255, 0.6);
+    border-radius    : 10px;
+    /* margin-bottom :.5em; */
+}
+
+.tippy-box[data-theme~='custom'] .tippy-arrow:before {
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+    top                : -8px;
+}
