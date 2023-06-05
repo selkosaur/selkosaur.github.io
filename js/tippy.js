@@ -1,7 +1,7 @@
 // tippy preferences
 import tippy, { createSingleton } from "https://esm.run/tippy.js";
 import tipcss from "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/dist/tippy.css" assert { type: "css" };
-import customtipstyle from "https://selkosaur.github.io/css/tippy.css" assert { type: "css" };
+import customtipstyle from "/css/tippy.css" assert { type: "css" };
 document.adoptedStyleSheets = [tipcss, customtipstyle];
 
 const titletips = tippy("[title]", {
@@ -18,7 +18,7 @@ tippy.setDefaultProps({
   arrow: false,
   theme: "light",
   placement: "bottom",
-  delay: [500, 100],
+  delay: [100, 200],
   duration: 100,
   //
 });
