@@ -28,8 +28,21 @@ const f = {
 
 const now = new Date();
 const tdbaredate = now.toDateString(); //just today's date to string
-const nowobj = dateTime(now.toJSON()); //converts full dateTime to string
+//const nowobj = dateTime(now.toJSON()); //converts full dateTime to string
 
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+/**
+ *
+ * @param {Number} days
+ * @returns {Date}
+ */
+const addDaystoNow = function (days) {
+  return addDays(tdbaredate, days);
+};
 /**
  * helper function to create object holding multiple types of date info
  * @param {string} datestring date string to parse
@@ -74,7 +87,18 @@ export default function dateTime(datestring) {
     minutes: parseInt(d.toLocaleTimeString([], { minute: "2-digit" })),
     seconds: parseInt(d.toLocaleTimeString([], { second: "2-digit" })),
     ampm: d.getHours() < 12 ? "am" : "pm",
+    isFuture: d > now,
+    isPast: d < now,
+    isToday: d.toDateString() === tdbaredate,
+    isWithinNext7Days: d < addDaystoNow(7),
   };
+  dateobj.isFuture
+    ? (dateobj.isTomorrow = d.toDateString() === addDaystoNow(1).toDateString())
+    : (dateobj.isTomorrow = false);
+  dateobj.isFuture
+    ? (dateobj.isYesterday = false)
+    : (dateobj.isYesterday =
+        d.toDateString() === addDaystoNow(-1).toDateString());
   dateobj.day00raw = new Date(dateobj.dsnonlocale);
   dateobj.day00ISO = dateobj.day00raw.toISOString();
   if (dateobj.hour24 == 0) {
