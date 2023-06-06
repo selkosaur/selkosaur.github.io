@@ -75,6 +75,8 @@ export default function dateTime(datestring) {
     seconds: parseInt(d.toLocaleTimeString([], { second: "2-digit" })),
     ampm: d.getHours() < 12 ? "am" : "pm",
   };
+  dateobj.day00raw = new Date(dateobj.dsnonlocale);
+  dateobj.day00ISO = dateobj.day00raw.toISOString();
   if (dateobj.hour24 == 0) {
     dateobj.hour12 = 12;
   }
