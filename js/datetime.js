@@ -1,3 +1,31 @@
+/**
+ * common formats to use with `toLocaleDateString`
+ */
+const f = {
+  MMDDYYYY: {
+    // ex)
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  },
+  datewordshort: {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  },
+  weekdaymonthday: {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  },
+  timestd: {
+    // ex) "2:34 PM"
+    hour: "numeric",
+    minute: "2-digit",
+  },
+};
+
 const now = new Date();
 const tdbaredate = now.toDateString(); //just today's date to string
 const nowobj = dateTime(now.toJSON()); //converts full dateTime to string
