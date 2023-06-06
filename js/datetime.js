@@ -7,7 +7,7 @@ const nowobj = dateTime(now.toJSON()); //converts full dateTime to string
  * @param {string} datestring date string to parse
  *
  */
-export function dateTime(datestring) {
+export default function dateTime(datestring) {
   // function to take date string, parse into date, return object
   const d = new Date(datestring);
   const baredate = new Date(d.toDateString());
@@ -82,4 +82,3 @@ export function dayvsnight(datetime, sunrisedatetime, sunsetdatetime) {
   dvn.afterSet = datetime > sunsetdatetime ? true : false;
   return dvn;
 }
-export { dateTime as default, dayvsnight };
