@@ -173,4 +173,4 @@ const dateDisplay = (targetEl) => {
   const update = setInterval(insertHTML, 1000);
 };
 
-export { dateDisplay };
+export { dateDisplay, f as dateFormats };
