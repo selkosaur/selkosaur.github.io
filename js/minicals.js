@@ -2,7 +2,7 @@ import {
   tippy,
   createSingleton,
 } from "https://selkosaur.github.io/js/tippy.js";
-console.log(tippy);
+
 const months = [
   "January",
   "February",
