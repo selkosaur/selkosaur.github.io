@@ -2,6 +2,7 @@ import {
   tippy,
   createSingleton,
 } from "https://selkosaur.github.io/js/tippy.js";
+import Draggabilly from "https://esm.run/draggabilly";
 
 const months = [
   "January",
@@ -74,7 +75,7 @@ const ElWithClass = function (eltype, classes) {
   //
   let el = document.createElement(eltype);
   if (classes) {
-    if (!Array.isArray(classes)) {
+    if (typeof classes === "string") {
       classes = [classes];
     }
     classes.forEach((item) => {
@@ -94,28 +95,35 @@ const sampleoptions = {
   targetEl: "",
   events: "",
   initMonth: "",
+  draggable: true,
 };
 
 class MiniCal {
   /**
    *
-   * @param {{targetEl: HTMLElement, initMonth: Date, events: Array}} options
+   * @param {{targetEl: HTMLElement, initMonth: Date, events: Array,theme:"mc2"|"circles", draggable:Boolean}} options
    */
   constructor(options) {
     if (options) {
       this.targetEl = options.targetEl ?? document.querySelector("body");
       this.initMonth = options.initMonth ?? new Date();
       this.events = options.events ?? [];
+      this.theme = options.theme ?? null;
+      this.draggable = options.draggable ?? false;
     } else {
       this.targetEl = document.querySelector("body");
       this.initMonth = new Date();
       this.events = [];
     }
+    this.draggie = null;
     this.displayMonth = this.initMonth;
     this.monthNum = this.displayMonth.getMonth();
     this.yearNum = this.displayMonth.getFullYear();
     this.wrapperEl = document.createElement("div");
     this.wrapperEl.classList.add("minicalnew");
+    if (this.theme) {
+      this.wrapperEl.classList.add(this.theme);
+    }
     this.headerEl = document.createElement("div");
     this.headerEl.classList.add("minical-header");
     this.headerSpan = document.createElement("span");
@@ -159,6 +167,9 @@ class MiniCal {
     this.addDayNumstoSpans();
     this.updateMonthTitle();
     this.targetEl.appendChild(this.wrapperEl);
+    if (this.draggable) {
+      this.makeDraggable();
+    }
   }
 
   updateMonthTitle() {
@@ -230,11 +241,16 @@ class MiniCal {
         <span class="minicaltip evt-title">
         ${ev.description.replace("--", "").trim() || ev.summary}</span>
         </div>`;
+        let mc = this;
+        let mctheme = "minical";
+        if (this.theme) {
+          mctheme = this.theme;
+        }
 
         let tip = tippy(dayMatch, {
           content: tipHTML,
           allowHTML: true,
-          theme: "minical",
+          theme: mctheme,
         });
         this.calTips.push(tip);
         dayMatch.setAttribute("data-hascaltip", true);
@@ -244,7 +260,7 @@ class MiniCal {
   createMonthTippySingleton() {
     this.calSingleton = createSingleton(this.calTips, {
       allowHTML: true,
-      theme: "minical",
+      theme: this.theme || "minical",
     });
   }
   removeEvents(events) {
@@ -307,6 +323,12 @@ class MiniCal {
       indexSpan.innerHTML = "";
     }
     //for (let x = day1Weekday; x < )
+  }
+  makeDraggable() {
+    this.wrapperEl.setAttribute("data-draggable", true);
+    this.draggie = new Draggabilly(this.wrapperEl, {
+      handle: this.headerEl,
+    });
   }
 }
 

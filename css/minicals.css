@@ -273,25 +273,33 @@ th {
     background-color: var(--mc-04-future3-accent-color);
 }
 
-.minicalnew {
-    display                : flex;
-    flex-direction         : column;
-    text-transform         : lowercase;
-    /*     background-color: rgba(0,0,0); */
-    backdrop-filter        : blur(3px);
-    max-height             : min-content;
-
-
-
-}
-
-:root {
-    --mc-border-color : #eeeeee;
+.minicalnew,.tippy-box{
+       --mc-border-color : #eeeeee;
     --mc-border-radius: 1.2em;
     --mc-today-bgcol  : rgb(177, 189, 203);
     --mc-event-bgcol  : rgb(200 159 180);
     --mc-day-bgcol    : rgba(255, 255, 255, 0.477);
+    --mc-bgcol:transparent;
+    --mc-textcol:inherit;
+    --mc-headercol: #b27092ff;
+    --mc-header-bgcol: rgba(255, 255, 255, .5);
+    --mc-eventday-textcol: white;
+    --mc-today-textcol: var(--mc-eventday-textcol);
+    --mc-darkaccent: #824f65;
+    --mc-dateunderline: #cccccc;
 }
+
+.minicalnew {
+    display                : flex;
+    flex-direction         : column;
+    text-transform         : lowercase;
+    background-color: var(--mc-bgcolor);
+    backdrop-filter        : blur(3px);
+    max-height             : min-content;
+    color: var(--mc-textcol);
+
+}
+
 
 .minical-header {
     display                : flex;
@@ -302,16 +310,20 @@ th {
     border-style           : solid;
     border-top-left-radius : var(--mc-border-radius);
     border-top-right-radius: var(--mc-border-radius);
-    background-color       : rgba(255, 255, 255, .5);
+    background-color       : var(--mc-header-bgcol);
     /*     background-color:rgba(213, 217, 217, 0.298); */
+    width: 100%;
+}
 
+.minicalnew[data-draggable=true] .minical-header{
+    cursor:move;
 }
 
 .minical-header>span {
     font-weight: 800;
     font-size  : 1.2rem;
     padding    : 0.5rem;
-    color      : #b27092ff;
+    color      : var(--mc-headercol);
 }
 
 .minical-body {
@@ -324,6 +336,7 @@ th {
     border-top               : 1px solid var(--mc-border-color);
     border-left              : 1px solid var(--mc-border-color);
     border-bottom-left-radius: var(--mc-border-radius);
+    background-color: var(--mc-day-bgcol);
 
 }
 
@@ -365,7 +378,7 @@ th {
 .minical-body .mc-day.today {
     font-weight     : bold;
     background-color: var(--mc-today-bgcol);
-    color           : white;
+    color           : var(--mc-today-textcol);
 }
 
 .minical-body .mc-day.today.has-event {
@@ -374,11 +387,11 @@ th {
 
 .minical-body .mc-day.has-event {
     background-color: var(--mc-event-bgcol);
-    color           : white;
+    color           :  var(--mc-eventday-textcol);
 }
 
 .minical-body .mc-day.has-event:hover {
-    background-color: #824f65;
+    background-color: var(--mc-darkaccent);
 }
 
 .minicaltip.evt-start {
@@ -393,7 +406,7 @@ th {
 .minicaltip.evt-start::before {
     width           : 2px;
     height          : 2px;
-    background-color: #824f65;
+    background-color: var(--mc-darkaccent);
     padding         : 1px;
     content         : " ";
     margin          : 2px;
@@ -408,13 +421,97 @@ th {
     /*     font-weight:bold; */
     text-decoration          : underline;
     text-decoration-thickness: 0.5px;
-    text-decoration-color    : #cccccc;
+    text-decoration-color    : var(--mc-dateunderline);
     text-transform           : lowercase;
 }
+
 
 .tippy-box[data-theme~='minical'] {
     background-color: rgba(255, 255, 255, 0.85);
     color           : inherit;
     border-radius   : 1.1rem;
 
+}
+
+.minicalnew.circles, .tippy-box[data-theme~='circles']{
+    --border: #d2a193;
+    --mc-bgcol: #eae3d1;
+    --accent: #cfc5ab;
+    --darktext:#4f4e4e;
+    --mc-darkaccent: var(--accent);
+    --mc-today-bgcol: var(--mc-bgcol);
+    --mc-eventday-textcol: var(--border);
+    --mc-day-bgcol:var(--mc-bgcol);
+    --mc-event-bgcol:var(--mc-bgcol);
+    --mc-textcol: var(--border);
+    --mc-headercol: var(--border);
+    --mc-header-bgcol: var(--mc-bgcol);
+    --mc-border-color: (--mc-bgcol);
+    --mc-border-radius: 0px;
+    --mc-dateunderline: var(--accent);
+}
+
+.minicalnew.circles{
+   
+    border: 2px solid var(--border);
+    border-radius: 7px;
+    box-shadow: 5px 5px 0px var(--border);
+    overflow:hidden;
+}
+
+.minicalnew.circles .minical-body{
+    border-top:2px solid ;
+    border-bottom: 0px;
+    border-right:0px;
+    border-bottom-right-radius: 0px;
+}
+.minicalnew.circles .mc-day{
+    border-radius:100%;
+    
+}
+.minicalnew.circles .minical-header{
+    border-color: var(--mc-bgcol);
+    border-width:0px;
+    justify-content: space-between;
+}
+
+.minicalnew.circles .minical-header::before{
+    content: '•••';
+    font-size: 3.4rem;
+    line-height: 0rem;
+    position: relative;
+    /* right: 45px; */
+    bottom: 3px;
+    left: 5px;
+}
+
+.minicalnew.circles .mc-day:hover{
+    background-color: var(--mc-day-bgcol);
+}
+.minicalnew.circles .mc-day.has-event{
+    border-radius:100%;
+    border: 2px solid var(--border);
+    transition:color 0s;
+}
+
+.minicalnew.circles .mc-day.has-event:hover{
+    background-color: var(--border);
+    color : var(--mc-bgcol);
+}
+
+.minicalnew.circles .minical-body .mc-day.today{
+    border: 2px solid var(--accent);
+    color: var(--darktext);
+}
+
+.tippy-box[data-theme~='circles']{
+    border-radius: 40px;
+    background-color: var(--mc-bgcol);
+    color: var(--mc-textcol);
+    border: 2px solid var(--border);
+    padding:  0.1em 0.3em;
+}
+
+.tippy-box[data-theme~='circles'] .minicaltip.evt-title{
+    color:var(--darktext);
 }
