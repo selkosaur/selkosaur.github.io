@@ -1,0 +1,420 @@
+:root {
+    /* ================color palettes===============*/
+    /* CSS HEX */
+    --eggplant            : #512d38ff;
+    --quinacridone-magenta: #824f65ff;
+    --sky-magenta         : #b27092ff;
+    --amaranth-pink       : #d398b7ff;
+    --fairy-tale          : #f4bfdbff;
+    --lavender-blush      : #ffe9f3ff;
+    --platinum            : #e1dee1ff;
+    --ash-gray            : #c3d2cfff;
+    --ash-gray-2          : #a5c6bdff;
+    --cambridge-blue      : #87baabff;
+
+    --original-green      : #8e9e84;
+    --original-lightpurple: rgba(0, 0, 255, 0.121);
+
+
+
+
+    /*color variables for calendar here*/
+
+    /*======== calendar tooltips ========*/
+    --tooltip-text-color    : #4f4e4e;
+    --tooltip-text-font-fam : inherit;
+    --tooltip-text-font-size: 11px;
+    --tooltip-bg            : #ffffff;
+
+
+    /* ====== icon next to calendar ======== */
+    --mc-04-beforeicon-display                : initial;
+    /*initial to show, none to hide */
+    --mc-04-beforeicon-glyph                  : '\ec0c';
+    /* some possible options for icons include:
+    \ec0c - saturn
+    \eb3b - jupiter
+    \eb97 - moon outline
+    \ebd4 - peach
+
+    (cappuccicons)
+    */
+    --mc-04-beforeicon-color                  : rgba(255, 255, 255, 0.7);
+    --mc-04-beforeicon-font-size              : calc(15px + 4px);
+    --mc-04-beforeicon-top                    : 10px;
+    --mc-04-beforeicon-left                   : -30px;
+
+
+    /*====== general calendar variables ======*/
+    --minical-font-fam      : 'Karla', sans-serif;
+    --minical-font-size     : 11px;
+    --minical-bg            : transparent;
+    --minical-today-bgcolor : rgb(177, 189, 203);
+    --mc-04-font-family     : "Karla", sans-serif;
+    --mc-04-font-size       : inherit;
+    --mc-04-bgcolor         : transparent;
+    --mc-04-bgfilter        : blur(40px);
+    --mc-04-border-color    : #eeeeee;
+    --mc-04-border-thickness: 1px;
+    --mc-04-border-style    : solid;
+    --mc-04-accent-color    : var(--sky-magenta);
+    --mc-04-line-height     : calc(11px + 6px);
+
+
+    /*===== calendar title related =====*/
+    --mc-04-title-bgcolor       : transparent;
+    --mc-04-title-bgfilter      : blur(0px);
+    --mc-04-title-color         : var(--mc-04-accent-color);
+    --mc-04-title-fontweight    : 700;
+    --mc-04-title-font-size     : calc(11px + 6px);
+    --mc-04-title-text-transform: lowercase;
+
+    /*======== weekdays  ========*/
+    --mc-04-weekday-font-family   : inherit;
+    --mc-04-weekday-fontweight    : 700;
+    --mc-04-weekday-text-transform: lowercase;
+    --mc-04-weekday-bgcolor       : transparent;
+    --mc-04-eventdaynum-color     : #ffffff;
+    --mc-04-eventdaynum-fontweight: 700;
+
+    /*======== next month cal  ========*/
+    --mc-04-nextmonth-accent-color     : var(--fairy-tale);
+    /* change to (--mc-04-accent-color) 
+    to match both months
+    */
+    --mc-04-nextmonth-title-color      : var(--mc-04-nextmonth-accent-color);
+    --mc-04-nextmonth-title-bgcolor    : var(--mc-04-title-bgcolor);
+    --mc-04-nextmonth-eventdaynum-color: var(--mc-04-eventdaynum-color);
+
+    /*======== future 2 month cal  ========*/
+    --mc-04-future2-accent-color     : var(--ash-gray-2);
+    --mc-04-future2-title-color      : var(--mc-04-future2-accent-color);
+    --mc-04-future2-title-bgcolor    : var(--mc-04-title-bgcolor);
+    --mc-04-future2-eventdaynum-color: var(--mc-04-eventdaynum-color);
+
+    /*======== future 3 month cal  ========*/
+    --mc-04-future3-accent-color     : var(--cambridge-blue);
+    --mc-04-future3-title-color      : var(--mc-04-future3-accent-color);
+    --mc-04-future3-title-bgcolor    : var(--mc-04-title-bgcolor);
+    --mc-04-future3-eventdaynum-color: var(--mc-04-eventdaynum-color);
+
+    /*======== future 4 month cal  ========*/
+    --mc-04-future4-accent-color     : var(--cambridge-blue);
+    --mc-04-future4-title-color      : var(--mc-04-future3-accent-color);
+    --mc-04-future4-title-bgcolor    : var(--mc-04-title-bgcolor);
+    --mc-04-future4-eventdaynum-color: var(--mc-04-eventdaynum-color);
+}
+
+/*======================
+
+    end of root variables
+
+  =======================*/
+
+
+
+/* --- tooltips  --- */
+
+#s-m-t-tooltip {
+    position      : absolute;
+    margin-top    : 15px;
+    z-index       : 9999;
+    padding       : 3px 5px;
+    background    : var(--tooltip-bg);
+    color         : var(--tooltip-text-color);
+    font-size     : var(--tooltip-text-font-size);
+    border        : 1px solid #eeeeee;
+    font-family   : var(--tooltip-text-font-fam);
+    pointer-events: none;
+}
+
+/*
+commenting out the scrollbars css
+*/
+/* ::-webkit-scrollbar-thumb {background-color:#cae4ff89;}
+::-webkit-scrollbar {background-color:transparent; width:1px; height:1px;} */
+
+/* --- basics --- */
+
+.minical::before {
+    display    : var(--mc-04-beforeicon-display);
+    content    : var(--mc-04-beforeicon-glyph);
+    position   : absolute;
+    top        : var(--mc-04-beforeicon-top);
+    left       : var(--mc-04-beforeicon-left);
+    font-size  : var(--mc-04-beforeicon-font-size);
+    font-weight: 400;
+    font-family: 'cappuccicons';
+    color      : var(--mc-04-beforeicon-color);
+    transition : 1s ease-out;
+    /*
+    content    :'icon-unicode';
+font-family    :'cappuccicons';
+    */
+}
+
+.minical:hover::before {
+    transform: rotate3d(1, 1, 1, 360deg);
+
+
+}
+
+.minical {
+    /*so pref*/
+    font-family     : var(--mc-04-font-family);
+    position        : static;
+    background-color: var(--mc-04-bgcolor);
+    backdrop-filter : var(--mc-04-bgfilter);
+    /* ------ */
+
+    /* position:absolute; */
+    /* background-color:#ffffff; */
+    top            : 325px;
+    left           : 54px;
+    width          : 217px;
+    height         : 221.667px;
+    border         : none;
+    border-right   : none;
+    border-bottom  : none;
+    line-height    : var(--mc-04-line-height);
+    display        : flex;
+    flex-wrap      : wrap;
+    justify-content: flex-start;
+    align-content  : flex-start;
+}
+
+.minical h4 {
+    margin          : 0px;
+    padding         : 10px;
+    text-align      : center;
+    background-color: var(--mc-04-title-bgcolor);
+    backdrop-filter : var(--mc-04-title-bgfilter);
+    text-transform  : var(--mc-04-title-text-transform);
+    font-weight     : var(--mc-04-title-fontweight);
+    color           : var(--mc-04-title-color);
+    font-size       : var(--mc-04-title-font-size);
+    cursor          : default;
+
+}
+
+.minical th[colspan="7"] {
+    height: 0px;
+}
+
+
+.minical td {
+    text-align: center;
+}
+
+.minical th {
+    text-align: center;
+}
+
+.minical th .weekday {
+    /*weekday headers*/
+    font-family     : var(--mc-04-weekday-font-family);
+    text-transform  : var(--mc-04-weekday-text-transform);
+    font-weight     : var(--mc-04-weekday-fontweight);
+    background-color: var(--mc-04-weekday-bgcolor);
+
+}
+
+.minical b {
+    color: var(--mc-04-eventdaynum-color);
+}
+
+.minical table td.event-info {
+    background-color: var(--mc-04-accent-color);
+}
+
+.minical .today-block {
+    background-color: var(--minical-today-bgcolor) !important;
+}
+
+.minical table {
+    border-collapse: collapse;
+    width          : 100%;
+    height         : 100%;
+}
+
+.minical table,
+td,
+th {
+    border: var(--mc-04-border-thickness) var(--mc-04-border-style) var(--mc-04-border-color);
+}
+
+.minical:nth-of-type(2) table h4 {
+    color           : var(--mc-04-nextmonth-title-color);
+    background-color: var(--mc-04-nextmonth-title-bgcolor);
+}
+
+.minical:nth-of-type(2) span b,
+.minical:nth-of-type(2) table td.event-info {
+    background-color: var(--mc-04-nextmonth-accent-color);
+}
+
+.minical:nth-of-type(3) table h4 {
+    color           : var(--mc-04-future2-accent-color);
+    background-color: var(--mc-04-future2-title-bgcolor);
+}
+
+.minical:nth-of-type(3) span b,
+.minical:nth-of-type(3) table td.event-info {
+    background-color: var(--mc-04-future2-accent-color);
+}
+
+.minical:nth-of-type(4) table h4 {
+    color           : var(--mc-04-future3-accent-color);
+    background-color: var(--mc-04-future3-title-bgcolor);
+}
+
+.minical:nth-of-type(4) span b,
+.minical:nth-of-type(4) table td.event-info {
+    background-color: var(--mc-04-future3-accent-color);
+}
+
+.minicalnew {
+    display                : flex;
+    flex-direction         : column;
+    text-transform         : lowercase;
+    /*     background-color: rgba(0,0,0); */
+    backdrop-filter        : blur(3px);
+    max-height             : min-content;
+
+
+
+}
+
+:root {
+    --mc-border-color : #eeeeee;
+    --mc-border-radius: 1.2em;
+    --mc-today-bgcol  : rgb(177, 189, 203);
+    --mc-event-bgcol  : rgb(200 159 180);
+    --mc-day-bgcol    : rgba(255, 255, 255, 0.477);
+}
+
+.minical-header {
+    display                : flex;
+    align-items            : center;
+    justify-content        : center;
+    border-width           : 1px 1px 0px 1px;
+    border-color           : var(--mc-border-color);
+    border-style           : solid;
+    border-top-left-radius : var(--mc-border-radius);
+    border-top-right-radius: var(--mc-border-radius);
+    background-color       : rgba(255, 255, 255, .5);
+    /*     background-color:rgba(213, 217, 217, 0.298); */
+
+}
+
+.minical-header>span {
+    font-weight: 800;
+    font-size  : 1.2rem;
+    padding    : 0.5rem;
+    color      : #b27092ff;
+}
+
+.minical-body {
+    display                  : grid;
+    grid-template-columns    : repeat(7, minmax(0, 1fr));
+    grid-template-rows       : repeat(6, minmax(0, 1fr));
+    aspect-ratio             : 7 / 6;
+    /*     max-height        : 100%; */
+    width                    : 100%;
+    border-top               : 1px solid var(--mc-border-color);
+    border-left              : 1px solid var(--mc-border-color);
+    border-bottom-left-radius: var(--mc-border-radius);
+
+}
+
+.minical-body .weekday,
+.minical-body .mc-day {
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+    border-bottom   : 1px solid var(--mc-border-color);
+    border-right    : 1px solid var(--mc-border-color);
+    background-color: var(--mc-day-bgcol);
+
+
+}
+
+.minical-body .mc-day:nth-last-child(7) {
+
+    border-bottom-left-radius: var(--mc-border-radius);
+
+}
+
+.minical-body .mc-day:last-child {
+    border-bottom-right-radius: var(--mc-border-radius);
+}
+
+.minical-body .weekday {
+    font-weight: 800;
+}
+
+.minical-body .weekday span,
+.minical-body .mc-day span {
+    cursor: default;
+}
+
+.minical-body .mc-day:hover {
+    background-color: #eeeeee;
+}
+
+.minical-body .mc-day.today {
+    font-weight     : bold;
+    background-color: var(--mc-today-bgcol);
+    color           : white;
+}
+
+.minical-body .mc-day.today.has-event {
+    background-color: #b8abc3;
+}
+
+.minical-body .mc-day.has-event {
+    background-color: var(--mc-event-bgcol);
+    color           : white;
+}
+
+.minical-body .mc-day.has-event:hover {
+    background-color: #824f65;
+}
+
+.minicaltip.evt-start {
+    font-weight: bold;
+}
+
+.minicaltip {
+    text-transform: lowercase;
+    font-size     : 0.9em;
+}
+
+.minicaltip.evt-start::before {
+    width           : 2px;
+    height          : 2px;
+    background-color: #824f65;
+    padding         : 1px;
+    content         : " ";
+    margin          : 2px;
+    border          : 2px solid transparent;
+    display         : inline-block;
+    border-radius   : 100%;
+    position        : relative;
+    top             : 2px;
+}
+
+.minicaltip.header {
+    /*     font-weight:bold; */
+    text-decoration          : underline;
+    text-decoration-thickness: 0.5px;
+    text-decoration-color    : #cccccc;
+    text-transform           : lowercase;
+}
+
+.tippy-box[data-theme~='minical'] {
+    background-color: rgba(255, 255, 255, 0.85);
+    color           : inherit;
+    border-radius   : 1.1rem;
+
+}
