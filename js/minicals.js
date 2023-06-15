@@ -4,6 +4,30 @@ import {
 } from "https://selkosaur.github.io/js/tippy.js";
 import Draggabilly from "https://esm.run/draggabilly";
 
+async function getapidata(url) {
+  const response = await fetch(url);
+  const data = await response.json();
+  // console.log(data);
+  // const calEvents = await transformEvents(data);
+  // loadcalendar(calEvents);
+  return data;
+}
+
+/**
+ * automatically get the month's events with ajax(?)
+ * @param {Date} startDate
+ * @param {Date} endDate
+ * @param {string} calname
+ */
+function googleCal(calname, startDate, endDate) {
+  //
+  let startStr = startDate.toISOString();
+  let endStr = endDate.toISOString();
+  let calbaseurl = `https://www.googleapis.com/calendar/v3/calendars/${calname}/events?key=AIzaSyDcnW6WejpTOCffshGDDb4neIrXVUA1EAE&timeMin=${startStr}&timeMax=${endStr}&singleEvents=true&maxResults=9999
+`;
+  return calbaseurl;
+}
+
 const months = [
   "January",
   "February",
@@ -101,7 +125,7 @@ const sampleoptions = {
 class MiniCal {
   /**
    *
-   * @param {{targetEl: HTMLElement, initMonth: Date, events: Array,theme:"mc2"|"circles", draggable:Boolean}} options
+   * @param {{targetEl: HTMLElement, initMonth: Date, events: Array,theme:"mc2"|"circles", draggable:Boolean,gcal:String|null,descriptionAsTitle: Boolean, evtDetailsinTooltip:Boolean}} options
    */
   constructor(options) {
     if (options) {
@@ -110,10 +134,16 @@ class MiniCal {
       this.events = options.events ?? [];
       this.theme = options.theme ?? null;
       this.draggable = options.draggable ?? false;
+      this.gcal = options.gcal ?? null;
+      this.descriptionAsTitle = options.descriptionAsTitle ?? false;
+      this.evtDetailsinTooltip = options.evtDetailsinTooltip ?? false;
     } else {
       this.targetEl = document.querySelector("body");
       this.initMonth = new Date();
       this.events = [];
+      this.gcal = null;
+      this.descriptionAsTitle = false;
+      this.evtDetailsinTooltip = false;
     }
     this.draggie = null;
     this.displayMonth = this.initMonth;
@@ -170,6 +200,9 @@ class MiniCal {
     if (this.draggable) {
       this.makeDraggable();
     }
+    if (this.gcal) {
+      this.integrateGcal();
+    }
   }
 
   updateMonthTitle() {
@@ -197,9 +230,14 @@ class MiniCal {
       if (!evStart) return;
       let startDate = evStart.dateTime ?? evStart.date;
       if (!startDate) return;
+      let evtTitle = ev.summary;
+
+      if (this.descriptionAsTitle) {
+        evtTitle = ev.description;
+      }
       let evtDate = new Date(startDate);
       let evtDateStr = DateString(evtDate);
-      let evtStartStr = ``;
+      let evtStartStr = `all day`;
       if (ev.start.dateTime) {
         evtStartStr = evtDate.toLocaleTimeString([], {
           hour: "numeric",
@@ -210,18 +248,21 @@ class MiniCal {
       let dayMatch = filteredNumDayDivs.find((div) => {
         return div.getAttribute("data-calday") === evtDateStr;
       });
+      if (!ev.description) {
+        ev.description = "";
+      }
       if (dayMatch) {
         if (dayMatch.hasAttribute("data-hascaltip")) {
           let tippyref = dayMatch._tippy;
           let prevcontent = tippyref.props.content;
           tippyref.setContent(
             prevcontent +
-              ` <div>
+              ` <div class="minicaltip eventinfo">
          <span class="minicaltip evt-start">
         ${evtStartStr}
         </span>
         <span class="minicaltip evt-title">
-        ${ev.description.replace("--", "").trim() || ev.summary}</span>
+        ${evtTitle.replace("--", "").trim() || ev.summary}</span>
         </div>`
           );
           return;
@@ -234,12 +275,12 @@ class MiniCal {
         dayMatch.classList.add("has-event");
         let tipHTML = `
         <div class="minicaltip header"><span>${headerStr}</span></div>
-        <div>
+        <div class="minicaltip eventinfo">
         <span class="minicaltip evt-start">
         ${evtStartStr}
         </span>
         <span class="minicaltip evt-title">
-        ${ev.description.replace("--", "").trim() || ev.summary}</span>
+        ${evtTitle.replace("--", "").trim() || ev.summary}</span>
         </div>`;
         let mc = this;
         let mctheme = "minical";
@@ -251,7 +292,10 @@ class MiniCal {
           content: tipHTML,
           allowHTML: true,
           theme: mctheme,
+          interactive: this.evtDetailsinTooltip,
+          appendTo: () => document.body,
         });
+
         this.calTips.push(tip);
         dayMatch.setAttribute("data-hascaltip", true);
       }
@@ -261,6 +305,8 @@ class MiniCal {
     this.calSingleton = createSingleton(this.calTips, {
       allowHTML: true,
       theme: this.theme || "minical",
+      interactive: this.evtDetailsinTooltip,
+      appendTo: () => document.body,
     });
   }
   removeEvents(events) {
@@ -290,10 +336,27 @@ class MiniCal {
   addDayNumstoSpans() {
     let d = this.displayMonth;
     let firstofMonth = new Date(d.getFullYear(), d.getMonth(), 1);
+    this.firstofMonth = firstofMonth;
+
     let lastofMonth = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+    this.lastofMonth = lastofMonth;
     let day1Weekday = firstofMonth.getDay();
     let monthEndWeekday = lastofMonth.getDay();
     let monthEndDayNum = lastofMonth.getDate();
+    //if the calendar won't fit into five weeks, need to add sixth row of day elements
+    if (day1Weekday + monthEndDayNum > 35) {
+      //
+      for (let dofM = 0; dofM < 7; dofM++) {
+        let dayEl = document.createElement("div");
+        dayEl.classList.add("mc-day");
+        // dayEl.innerHTML = `<span></span>`;
+        this.dayEls.push(dayEl);
+        let daySpan = document.createElement("span");
+        this.daySpans.push(daySpan);
+        dayEl.appendChild(daySpan);
+        this.calBodyEl.appendChild(dayEl);
+      }
+    }
     //blank cells before month starts
     for (let i = 0; i < day1Weekday; i++) {
       this.daySpans[i].innerHTML = "";
@@ -328,6 +391,13 @@ class MiniCal {
     this.wrapperEl.setAttribute("data-draggable", true);
     this.draggie = new Draggabilly(this.wrapperEl, {
       handle: this.headerEl,
+    });
+  }
+  integrateGcal() {
+    let url = googleCal(this.gcal, this.firstofMonth, this.lastofMonth);
+
+    getapidata(url).then((data) => {
+      this.addEvents(data.items);
     });
   }
 }
@@ -394,9 +464,9 @@ function renderMiniCal() {
   let curYear = date.getFullYear();
   let monthStartWeekDay = new Date(curYear, date.getMonth(), 1).getDay();
   monthStartWeekDay = weekdays[monthStartWeekDay];
-  console.log(curMonth);
-  console.log(curWeekDay);
-  console.log(monthStartWeekDay);
+  // console.log(curMonth);
+  // console.log(curWeekDay);
+  // console.log(monthStartWeekDay);
   createCalendar(calendar, curYear, monthIndex);
 }
 //renderMiniCal()

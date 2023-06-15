@@ -273,30 +273,32 @@ th {
     background-color: var(--mc-04-future3-accent-color);
 }
 
-.minicalnew,.tippy-box{
-       --mc-border-color : #eeeeee;
-    --mc-border-radius: 1.2em;
-    --mc-today-bgcol  : rgb(177, 189, 203);
-    --mc-event-bgcol  : rgb(200 159 180);
-    --mc-day-bgcol    : rgba(255, 255, 255, 0.477);
-    --mc-bgcol:transparent;
-    --mc-textcol:inherit;
-    --mc-headercol: #b27092ff;
-    --mc-header-bgcol: rgba(255, 255, 255, .5);
-    --mc-eventday-textcol: white;
-    --mc-today-textcol: var(--mc-eventday-textcol);
-    --mc-darkaccent: #824f65;
-    --mc-dateunderline: #cccccc;
+.minicalnew,
+.tippy-box {
+    --mc-border-color     : #eeeeee;
+    --mc-border-radius    : 1.2em;
+    --mc-today-bgcol      : rgb(177, 189, 203);
+    --mc-event-bgcol      : rgb(200 159 180);
+    --mc-day-bgcol        : rgba(255, 255, 255, 0.477);
+    --mc-today-event-bgcol: #b8abc3;
+    --mc-bgcol            : transparent;
+    --mc-textcol          : inherit;
+    --mc-headercol        : #b27092ff;
+    --mc-header-bgcol     : rgba(255, 255, 255, .5);
+    --mc-eventday-textcol : white;
+    --mc-today-textcol    : var(--mc-eventday-textcol);
+    --mc-darkaccent       : #824f65;
+    --mc-dateunderline    : #cccccc;
 }
 
 .minicalnew {
-    display                : flex;
-    flex-direction         : column;
-    text-transform         : lowercase;
+    display         : flex;
+    flex-direction  : column;
+    text-transform  : lowercase;
     background-color: var(--mc-bgcolor);
-    backdrop-filter        : blur(3px);
-    max-height             : min-content;
-    color: var(--mc-textcol);
+    backdrop-filter : blur(3px);
+    max-height      : min-content;
+    color           : var(--mc-textcol);
 
 }
 
@@ -312,11 +314,11 @@ th {
     border-top-right-radius: var(--mc-border-radius);
     background-color       : var(--mc-header-bgcol);
     /*     background-color:rgba(213, 217, 217, 0.298); */
-    width: 100%;
+    width                  : 100%;
 }
 
-.minicalnew[data-draggable=true] .minical-header{
-    cursor:move;
+.minicalnew[data-draggable=true] .minical-header {
+    cursor: move;
 }
 
 .minical-header>span {
@@ -336,8 +338,8 @@ th {
     border-top               : 1px solid var(--mc-border-color);
     border-left              : 1px solid var(--mc-border-color);
     border-bottom-left-radius: var(--mc-border-radius);
-    background-color: var(--mc-day-bgcol);
-
+    background-color         : var(--mc-day-bgcol);
+    grid-auto-rows           : minmax(0, 1fr);
 }
 
 .minical-body .weekday,
@@ -350,6 +352,10 @@ th {
     background-color: var(--mc-day-bgcol);
 
 
+}
+
+.minicalnew .mc-day {
+    aspect-ratio: 1/1;
 }
 
 .minical-body .mc-day:nth-last-child(7) {
@@ -382,12 +388,12 @@ th {
 }
 
 .minical-body .mc-day.today.has-event {
-    background-color: #b8abc3;
+    background-color: var(--mc-today-event-bgcol);
 }
 
 .minical-body .mc-day.has-event {
     background-color: var(--mc-event-bgcol);
-    color           :  var(--mc-eventday-textcol);
+    color           : var(--mc-eventday-textcol);
 }
 
 .minical-body .mc-day.has-event:hover {
@@ -433,85 +439,105 @@ th {
 
 }
 
-.minicalnew.circles, .tippy-box[data-theme~='circles']{
-    --border: #d2a193;
-    --mc-bgcol: #eae3d1;
-    --accent: #cfc5ab;
-    --darktext:#4f4e4e;
-    --mc-darkaccent: var(--accent);
-    --mc-today-bgcol: var(--mc-bgcol);
-    --mc-eventday-textcol: var(--border);
-    --mc-day-bgcol:var(--mc-bgcol);
-    --mc-event-bgcol:var(--mc-bgcol);
-    --mc-textcol: var(--border);
-    --mc-headercol: var(--border);
-    --mc-header-bgcol: var(--mc-bgcol);
-    --mc-border-color: (--mc-bgcol);
-    --mc-border-radius: 0px;
-    --mc-dateunderline: var(--accent);
+.minicalnew.circles,
+.tippy-box[data-theme~='circles'] {
+    --border              : #d2a193;
+    --mc-bgcol            : #eae3d1;
+    --accent              : #cfc5ab;
+    --darktext            : #4f4e4e;
+    --mc-darkaccent       : var(--accent);
+    --mc-today-bgcol      : var(--mc-bgcol);
+    --mc-eventday-textcol : var(--border);
+    --mc-day-bgcol        : var(--mc-bgcol);
+    --mc-event-bgcol      : var(--mc-bgcol);
+    --mc-textcol          : var(--border);
+    --mc-headercol        : var(--border);
+    --mc-header-bgcol     : var(--mc-bgcol);
+    --mc-border-color     : (--mc-bgcol);
+    --mc-border-radius    : 0px;
+    --mc-dateunderline    : var(--accent);
+    --mc-today-event-bgcol: var(--border);
 }
 
-.minicalnew.circles{
-   
-    border: 2px solid var(--border);
+.minicalnew.circles {
+
+    border       : 2px solid var(--border);
     border-radius: 7px;
-    box-shadow: 5px 5px 0px var(--border);
-    overflow:hidden;
+    box-shadow   : 5px 5px 0px var(--border);
+    overflow     : hidden;
 }
 
-.minicalnew.circles .minical-body{
-    border-top:2px solid ;
-    border-bottom: 0px;
-    border-right:0px;
+.minicalnew.circles .minical-body {
+    border-top                : 2px solid;
+    border-bottom             : 0px;
+    border-right              : 0px;
     border-bottom-right-radius: 0px;
 }
-.minicalnew.circles .mc-day{
-    border-radius:100%;
-    
+
+.minicalnew.circles .mc-day {
+    border-radius: 100%;
+
 }
-.minicalnew.circles .minical-header{
-    border-color: var(--mc-bgcol);
-    border-width:0px;
+
+.minicalnew.circles .minical-header {
+    border-color   : var(--mc-bgcol);
+    border-width   : 0px;
     justify-content: space-between;
 }
 
-.minicalnew.circles .minical-header::before{
-    content: '•••';
-    font-size: 3.4rem;
+.minicalnew.circles .minical-header::before {
+    content    : '•••';
+    font-size  : 3.4rem;
     line-height: 0rem;
-    position: relative;
-    /* right: 45px; */
-    bottom: 3px;
-    left: 5px;
+    position   : relative;
+    /* right   : 45px; */
+    bottom     : 3px;
+    left       : 5px;
 }
 
-.minicalnew.circles .mc-day:hover{
+.minicalnew.circles .mc-day:hover {
     background-color: var(--mc-day-bgcol);
 }
-.minicalnew.circles .mc-day.has-event{
-    border-radius:100%;
-    border: 2px solid var(--border);
-    transition:color 0s;
+
+.minicalnew.circles .mc-day.has-event {
+    border-radius: 100%;
+    border       : 2px solid var(--border);
+    transition   : color 0s;
 }
 
-.minicalnew.circles .mc-day.has-event:hover{
+.minicalnew.circles .mc-day.has-event:hover {
     background-color: var(--border);
-    color : var(--mc-bgcol);
+    color           : var(--mc-bgcol);
 }
 
-.minicalnew.circles .minical-body .mc-day.today{
+.minicalnew.circles .minical-body .mc-day.today {
     border: 2px solid var(--accent);
-    color: var(--darktext);
+    color : var(--darktext);
 }
 
-.tippy-box[data-theme~='circles']{
-    border-radius: 40px;
-    background-color: var(--mc-bgcol);
-    color: var(--mc-textcol);
+.minicalnew.circles .minical-body .mc-day.today.has-event {
+    color : var(--mc-bgcol);
     border: 2px solid var(--border);
-    padding:  0.1em 0.3em;
 }
 
-.tippy-box[data-theme~='circles'] .minicaltip.evt-title{
-    color:var(--darktext);
+.tippy-box[data-theme~='circles'] {
+    border-radius   : 40px;
+    background-color: var(--mc-bgcol);
+    color           : var(--mc-textcol);
+    border          : 2px solid var(--border);
+    padding         : 0.1em 0.3em;
+}
+
+.tippy-box[data-theme~='circles'] .minicaltip.evt-title {
+    color          : var(--darktext);
+    align-self     : end;
+    /*     display :flex;
+    justify-content:space-between; */
+}
+
+.tippy-box[data-theme~='circles'] .minicaltip.eventinfo {
+    grid-template-columns: 5em 1fr;
+    grid-template-rows   : auto;
+    display              : grid;
+    /*     column-gap    :1em; */
 }
