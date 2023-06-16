@@ -331,7 +331,7 @@ th {
 .minical-body {
     display                  : grid;
     grid-template-columns    : repeat(7, minmax(0, 1fr));
-    grid-template-rows       : repeat(6, minmax(0, 1fr));
+    grid-template-rows       : auto repeat(5, minmax(0, 1fr));
     aspect-ratio             : 7 / 6;
     /*     max-height        : 100%; */
     width                    : 100%;
