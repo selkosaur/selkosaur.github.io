@@ -472,6 +472,7 @@ th {
     border-bottom             : 0px;
     border-right              : 0px;
     border-bottom-right-radius: 0px;
+    padding                   : 0.2em;
 }
 
 .minicalnew.circles .mc-day {
