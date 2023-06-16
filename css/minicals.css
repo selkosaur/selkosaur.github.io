@@ -295,7 +295,7 @@ th {
     display         : flex;
     flex-direction  : column;
     text-transform  : lowercase;
-    background-color: var(--mc-bgcolor);
+    background-color: var(--mc-bgcol);
     backdrop-filter : blur(3px);
     max-height      : min-content;
     color           : var(--mc-textcol);
