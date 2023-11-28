@@ -16,7 +16,7 @@ class Accordion extends HTMLElement {
   }
   connectedCallback() {
     //
-    console.log(`accordion connected!`, this);
+    // console.log(`accordion connected!`, this);
     this.toggleEl = this.firstElementChild;
     this.panelEl = this.lastElementChild;
     this.parentElement.closest("accord-ion")
@@ -41,19 +41,19 @@ class Accordion extends HTMLElement {
   addclickToggleHandler() {
     const acc = this;
     const togAcc = (ev) => {
-      console.log(`togAcc, ev, this`, ev, this);
+      //   console.log(`togAcc, ev, this`, ev, this);
       this.classList.toggle("active");
       this.panelEl.style.maxHeight
         ? (this.panelEl.style.maxHeight = null)
         : (this.panelEl.style.maxHeight = this.panelEl.scrollHeight + "px");
       if (this.hasAttribute("sub-menu")) {
         //
-        console.log("this is a submenu");
+        // console.log("this is a submenu");
         let parentAcc = this.parentElement.closest("accord-ion[has-submenu]");
         let ogheight = parentAcc.lastElementChild.style.maxHeight;
         let parentAdjHeight =
           parseInt(ogheight.replace("px", "")) + this.panelEl.scrollHeight;
-        console.log(parentAdjHeight);
+        // console.log(parentAdjHeight);
         parentAcc.lastElementChild.style.maxHeight = parentAdjHeight + "px";
       }
     };
