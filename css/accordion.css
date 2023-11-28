@@ -1,0 +1,40 @@
+accord-ion .panel {
+    overflow           : hidden;
+    max-height         : 0;
+    transition         : max-height 0.4s;
+    margin-inline-start: 1.6rem;
+}
+
+accord-ion>*:first-child,
+accord-ion>*:first-child:hover,
+accord-ion>*:first-child:active {
+    border   : initial;
+    transform: initial;
+    font-size: inherit;
+}
+
+accord-ion>*,
+accord-ion>.panel>* {
+    /* display        : list-item; */
+    /* list-style-type: none; */
+}
+
+accord-ion>*:first-child::before {
+    content         : "\ea00";
+    display         : inline-block;
+    transition      : transform 0.4s;
+    transform-origin: center center;
+    color           : inherit;
+    aspect-ratio    : 1/1;
+    font-family     : "Phosphor";
+    transform       : translateY(2px);
+    margin-right    : 0.4rem;
+    text-indent     : 0px !important;
+    text-align      : start !important;
+    text-align-last : start !important;
+
+}
+
+accord-ion.active>*:first-child::before {
+    transform: rotate(90deg);
+}
