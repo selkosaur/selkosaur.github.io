@@ -1,6 +1,6 @@
-import accCss from "../css/accordion.css" assert { type: "css" };
+import accCss from "../css/accordion.css" with { type: "css" };
 
-import phIcons from "https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css" assert { type: "css" };
+import phIcons from "https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css" with { type: "css" };
 
 document.adoptedStyleSheets = [...document.adoptedStyleSheets, accCss, phIcons];
 /* structure should be
@@ -55,7 +55,7 @@ class Accordion extends HTMLElement {
         const ogheightnum = parseInt(ogheight.replace("px", ""));
 
         let parentScrollHeight = parentAcc.lastElementChild.scrollHeight;
-        console.log(ogheight, this.panelEl.scrollHeight, parentScrollHeight);
+        // console.log(ogheight, this.panelEl.scrollHeight, parentScrollHeight);
 
         let parentAdjHeight =
           parseInt(ogheight.replace("px", "")) + this.panelEl.scrollHeight;
