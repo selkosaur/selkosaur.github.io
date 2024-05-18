@@ -34,11 +34,11 @@ slide-out[open]::part(controls-button)::before {
 }
 
 slide-out.indented-panel::part(panel-outer) {
-    margin-inline-start: 1em;
+    margin-inline-start: var(--panel-indent, 1em);
 }
 
 slide-out.indented-panel.recurse slide-out::part(panel-outer) {
-    margin-inline-start: 1em;
+    margin-inline-start: var(--panel-indent, 1em);
 }
 
 slide-out.arrow::part(controls-button)::before {
