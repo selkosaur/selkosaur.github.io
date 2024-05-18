@@ -73,8 +73,8 @@ class ProgressBar extends HTMLElement {
         </style>`;
   }
   get #template() {
-    return `<div class="bar outer">
-                <div class="inner" ></div>
+    return `<div class="bar outer" part="bar-outer">
+                <div class="inner" part="bar-inner" ></div>
             </div>`;
   }
   render() {
