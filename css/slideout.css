@@ -1,0 +1,82 @@
+slide-out {}
+
+slide-out::part(controls-button) {
+    all             : unset;
+    background-color: transparent;
+    border          : 0px solid transparent;
+    cursor          : pointer;
+    font-size       : inherit;
+    appearance      : none;
+    transition      : background-color 0.2s ease-in-out;
+}
+
+slide-out::part(panel-inner) {}
+
+slide-out[open]::part(controls-button) {}
+
+slide-out::part(controls-button)::before {
+    /* content         : "\ea00";
+    display         : inline-block;
+    transition      : transform 0.4s;
+    transform-origin: center center;
+    color           : inherit;
+    aspect-ratio    : 1/1;
+    font-family     : "Phosphor";
+    transform       : translateY(2px);
+    margin-right    : 0.4rem;
+    text-indent     : 0px !important;
+    text-align      : start !important;
+    text-align-last : start !important; */
+}
+
+slide-out[open]::part(controls-button)::before {
+    /* transform: rotate(90deg); */
+}
+
+slide-out.indented-panel::part(panel-outer) {
+    margin-inline-start: 1em;
+}
+
+slide-out.indented-panel.recurse slide-out::part(panel-outer) {
+    margin-inline-start: 1em;
+}
+
+slide-out.arrow::part(controls-button)::before {
+    content         : "\ea00";
+    display         : inline-block;
+    transition      : transform 0.4s;
+    transform-origin: center center;
+    color           : inherit;
+    aspect-ratio    : 1/1;
+    font-family     : "Phosphor";
+    transform       : translateY(2px);
+    margin-right    : 0.4rem;
+    text-indent     : 0px !important;
+    text-align      : start !important;
+    text-align-last : start !important;
+}
+
+slide-out.arrow[open]::part(controls-button)::before {
+    transform: rotate(90deg);
+}
+
+.slideout-arrows {
+    slide-out::part(controls-button)::before {
+        content         : "\ea00";
+        display         : inline-block;
+        transition      : transform 0.4s;
+        transform-origin: center center;
+        color           : inherit;
+        aspect-ratio    : 1/1;
+        font-family     : "Phosphor";
+        transform       : translateY(2px);
+        margin-right    : 0.4rem;
+        text-indent     : 0px !important;
+        text-align      : start !important;
+        text-align-last : start !important;
+    }
+
+    slide-out[open]::part(controls-button)::before {
+        transform: rotate(90deg);
+    }
+}
