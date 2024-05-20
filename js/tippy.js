@@ -1,7 +1,7 @@
 // tippy preferences
 import tippy, { createSingleton } from "https://esm.run/tippy.js";
-import tipcss from "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/dist/tippy.css" assert { type: "css" };
-import customtipstyle from "/css/tippy.css" assert { type: "css" };
+import tipcss from "https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/dist/tippy.css" with { type: "css" };
+import customtipstyle from "/css/tippy.css" with { type: "css" };
 document.adoptedStyleSheets = [
   ...document.adoptedStyleSheets,
   tipcss,
