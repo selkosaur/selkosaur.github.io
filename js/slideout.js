@@ -83,6 +83,13 @@ element
 
 */
 
+/**
+ * Optional. Can use this to import the slideout css
+ * @returns
+ */
+export async function importCss() {
+  return await import(`./slideout-css.js`);
+}
 try {
   customElements.define("slide-out", SlideOut);
 } catch (error) {}
