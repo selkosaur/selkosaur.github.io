@@ -1,0 +1,76 @@
+/* 
+color options: 
+unchecked: outer border color, outer bg color, inner border color, inner bg color
+checked: outer border color, outer bg color, inner border color, inner bg color
+*/
+input[is=checkbox-toggle] {
+    /* fallback colors */
+    --outerborder-un: rgb(209, 216, 220);
+    --outerbg-un    : transparent;
+    --innerborder-un: var(--outerborder-un);
+    --innerbg-un    : ghostwhite;
+    --outerborder-ch: var(--outerborder-un);
+    --outerbg-ch    : var(--outerborder-un);
+    --innerborder-ch: var(--innerborder-un);
+    --innerbg-ch    : var(--innerbg-un);
+}
+
+input[is=checkbox-toggle] {
+    --b       : var(--outerbg-un);
+    --bord    : var(--outerborder-un);
+    margin    : 0;
+    cursor    : pointer;
+    appearance: none;
+    position  : relative;
+    background: var(--b);
+    border    : 0.0714rem solid var(--bord);
+    transition: background 0.3s,
+        border-color 0.3s,
+        box-shadow 0.2s;
+    width             : 2.2857rem;
+    height            : 1.2857rem;
+    border-radius     : 3.5714rem;
+    --toggle-transform: translateX(0px);
+    --active-blob     : calc(translateY(100%));
+}
+
+input[is=checkbox-toggle]::after {
+    --b             : var(--innerbg-un);
+    --bord          : var(--innerborder-un);
+    content         : "";
+    display         : block;
+    position        : absolute;
+    border-radius   : 50%;
+    border          : 0.0357rem solid var(--bord);
+    display         : inline-block;
+    left            : 0.1429rem;
+    top             : 0.1071rem;
+    width           : 0.8571rem;
+    height          : 0.8571rem;
+    background-color: var(--b);
+    transition      : transform var(--d-t, 0.3s) var(--d-t-e, ease),
+        opacity var(--d-o, 0.2s), background 0.3s,
+        border-color 0.3s;
+}
+
+input[is=checkbox-toggle]:checked {
+    --b               : var(--outerbg-ch);
+    --bord            : var(--outerborder-ch);
+    --bc              : var(--active);
+    --d-o             : .3s;
+    --d-t             : .6s;
+    --d-t-e           : cubic-bezier(.2, .85, .32, 1.2);
+    --ab              : var(--active-inner);
+    --x               : 1.2143rem;
+    --toggle-transform: translateX(1rem);
+
+    &::after {
+        --b   : var(--innerbg-ch);
+        --bord: var(--innerborder-ch);
+    }
+
+}
+
+input[is=checkbox-toggle]:checked::after {
+    transform: var(--toggle-transform);
+}
