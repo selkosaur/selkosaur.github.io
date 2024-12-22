@@ -1,4 +1,5 @@
 class SlideOut extends HTMLElement {
+  static observedAttributes = ["open"];
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
@@ -38,11 +39,17 @@ class SlideOut extends HTMLElement {
     this.removeControlsListener();
   }
   attributeChangedCallback(name, oldValue, newValue) {
-    //
+    if (name === "open") {
+      const isFalsy = newValue === null || newValue === "false";
+      this.panelOuter.classList.toggle("open", !isFalsy);
+    }
   }
   adoptedCallback() {}
 
   render() {
+    if (this.rendered) {
+      return;
+    }
     this.controlToggle = document.createElement("button");
     this.controlToggle.setAttribute("part", "controls-button");
     this.controlToggle.innerHTML = `<slot name="controls"></slot>`;
@@ -50,25 +57,20 @@ class SlideOut extends HTMLElement {
     this.panelOuter.classList.add("panel-outer");
     this.panelOuter.setAttribute("part", "panel-outer");
     this.panelOuter.innerHTML = `<div class="panel-inner" part="panel-inner"><slot></slot></div>`;
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.innerHTML = SlideOut.css;
     this.shadowRoot.append(style, this.controlToggle, this.panelOuter);
+    this.rendered = true;
   }
   toggleSlideOut() {
     this.toggleAttribute("open");
-    this.panelOuter.classList.toggle("open");
   }
+  #toggleSlideOutBound = this.toggleSlideOut.bind(this);
   addControlsListener() {
-    this.controlToggle.addEventListener(
-      "click",
-      this.toggleSlideOut.bind(this)
-    );
+    this.controlToggle.addEventListener("click", this.#toggleSlideOutBound);
   }
   removeControlsListener() {
-    this.controlToggle.removeEventListener(
-      "click",
-      this.toggleSlideOut.bind(this)
-    );
+    this.controlToggle.removeEventListener("click", this.#toggleSlideOutBound);
   }
 }
 
