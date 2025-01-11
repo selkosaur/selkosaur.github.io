@@ -11,17 +11,27 @@ function Span(cssclasses) {
   }
   return span;
 }
+
+class SplitInfo {
+  /**
+   *
+   * @param {string} rawEmail
+   */
+  constructor(rawEmail) {
+    this.combined = rawEmail;
+    const splitIndex = rawEmail.indexOf("<");
+    this.name = rawEmail.slice(0, splitIndex).replace(/"/g, "").trim();
+    this.email = rawEmail.slice(splitIndex).replace(/[<>]/g, "").trim();
+  }
+}
+
 //helper functions
 /**
- * @constructor helper fn
- * @param {string} string the  raw "from" in the "Sender Name" <address@email.com> format
+ * @param {string} string the  raw "from" in the "Sender Name" `<address@email.com>` format
  *
  */
-export let SplitEmailInfo = function (string) {
-  this.combined = string;
-  let splitIndex = string.indexOf("<");
-  this.name = string.slice(0, splitIndex).replace(/"/g, "").trim();
-  this.email = string.slice(splitIndex).replace(/[<>]/g, "").trim();
+export const SplitEmailInfo = function (string) {
+  return new SplitInfo(string);
 };
 
 /**
@@ -30,7 +40,7 @@ export let SplitEmailInfo = function (string) {
  * @param {Date} startDate the earlier Date obj
  * @return {number} the difference in days
  */
-export let DaysDiff = function (endDate, startDate) {
+export const DaysDiff = function (endDate, startDate) {
   const diffTime = endDate.getTime() - startDate.getTime();
   const diffDays = diffTime / (1000 * 60 * 60 * 24);
   return diffDays;
@@ -49,7 +59,7 @@ class EmailEntry {
   constructor(thread) {
     this.wrapper = document.createElement("div");
     this._emailDetails = thread;
-    this.emailPicSVG = `                      <svg
+    this.emailPicSVG = `<svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
@@ -66,7 +76,7 @@ class EmailEntry {
                         />
                       </svg>`;
     this.emptyStarSVG = ``;
-    this.filledStarSVG = `      <svg
+    this.filledStarSVG = `<svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -117,10 +127,10 @@ class EmailEntry {
     senderName = senderName.replace(/"/g, "").trim();
     //for convos, get names of last message
     if (thread.msgcount > 1) {
-      let lastmsg = thread.messages.at(-1);
+      const lastmsg = thread.messages.at(-1);
 
-      let lastmsgSender = new SplitEmailInfo(lastmsg.from);
-      let lastmsgReceiver = new SplitEmailInfo(lastmsg.to);
+      const lastmsgSender = new SplitEmailInfo(lastmsg.from);
+      const lastmsgReceiver = new SplitEmailInfo(lastmsg.to);
       senderName = `<span class="last-msg-sender">${lastmsgSender.name}</span><span class="last-msg-receiver">${lastmsgReceiver.name}</span>`;
       senderEmail = `<span class="last-msg-sender">${lastmsgSender.email}</span><span class="last-msg-receiver">${lastmsgReceiver.email}</span>`;
     }
@@ -129,12 +139,12 @@ class EmailEntry {
         date section
         
         */
-    let emaildate = new Date(thread.lastupdate);
-    let worddatestr = emaildate.toLocaleDateString([], {
+    const emaildate = new Date(thread.lastupdate);
+    const worddatestr = emaildate.toLocaleDateString([], {
       month: "short",
       day: "numeric",
     });
-    let dateDisp =
+    const dateDisp =
       DaysDiff(new Date(), emaildate) > 7 ? worddatestr : timeAgo(emaildate);
 
     this.senderEl.innerHTML = `
@@ -166,7 +176,7 @@ class EmailEntry {
     return this._emailDetails;
   }
   addtoEmailBox() {
-    let thread = this._emailDetails;
+    const thread = this._emailDetails;
     thread.hasStarred
       ? EmailEntry.emailbox.prepend(this.wrapper)
       : EmailEntry.emailbox.appendChild(this.wrapper);
